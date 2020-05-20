@@ -3,12 +3,14 @@
     <h1 class="text-center display-1">SSL Test History</h1>
 
     <card>
-      <form @submit.prevent @submit="refresh">
+      <h3 v-if="!history" class="card-subtitle mb-2 text-muted text-center">Could not load history.</h3>
+      <form @submit.prevent @submit="refresh" v-if="history">
         <base-input label="Test Select">
-          <select class="form-control select-primary" id="testSelect" v-model="current">
+          <select class="form-control select-primary" id="testSelect" v-model="current" >
             <option v-for="(value,key,index) in history.items" :key="index" :value="key">{{key}} </option>
           </select>
         </base-input>
+
         <base-button
           native-type="submit"
           type="primary"
@@ -148,12 +150,12 @@ export default {
       .then(response => {
         let data = response.data;
         this.history = data
-        console.log(this.history)
 
         this.processing = false;
       })
       .catch(error => {
         console.log(error);
+        this.$notify({type: 'warning', message: error.message})
         this.processing = false;
       });
     }

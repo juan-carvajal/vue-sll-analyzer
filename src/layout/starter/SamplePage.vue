@@ -176,7 +176,8 @@ export default {
           this.processing = false;
         })
         .catch(error => {
-          console.log(error);
+          this.$notify({type: 'warning', message: error.message})
+          console.log(JSON.stringify(error));
           this.processing = false;
         });
     }
