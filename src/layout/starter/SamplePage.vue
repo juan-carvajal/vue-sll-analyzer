@@ -168,7 +168,7 @@ export default {
     submit() {
       this.processing = true;
       axios
-        .get("http://localhost:8081/report/" + this.domain)
+        .get("http://localhost:8081/report/" + encodeURIComponent(this.domain))
         .then(response => {
           let data = response.data;
           this.result = data;
